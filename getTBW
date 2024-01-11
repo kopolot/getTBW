@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ "$1" =~ ^/dev/nvme[a-z0-9]*$ ]];then
+    sudo smartctl -A $1 | grep "Data Units Written"
+else
+    sudo smartctl -A $1 | grep "Total_LBAs_Written" | awk '{print "Total Bytes Written (TBW): " $10 * 512 / 1099511627776 " TB"}'
+fi
